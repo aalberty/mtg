@@ -1,3 +1,5 @@
+import json
+
 def load_precon(filename):
     file = open(filename, 'r')
     raw_text = file.readlines()
@@ -18,6 +20,15 @@ def load_library():
         library.append(line[:-1])
     return library
 
+def load_list(path):
+    file = open(path, "r")
+    raw_text = file.readlines()
+    new_list = []
+    for line in raw_text:
+        new_list.append(line[:-1])
+    return new_list
+
+
 def find_unowned(decklist, library):
     not_owned = []
     for card in decklist:
@@ -30,3 +41,12 @@ def add_to_lib(decklist, library):
         if card['name'] not in ['Swamp', 'Mountain', 'Island', 'Forest', 'Plain']:
             library.append(card['name'])
     
+def make_grouped_lib(library):
+    grouped_lib = {}
+    for card in library:
+        if (card not in grouped_lib):
+            grouped_lib[card] = {"count": 1}
+        else:
+            grouped_lib[card]["count"] += 1
+    return grouped_lib
+
